@@ -1,0 +1,84 @@
+{
+  "history": [
+    {
+      "id": "363d2d00-210b-4142-996d-ecd8974df03b",
+      "title": "Mix lists - 2010s Music (pop electronic)",
+      "url": "https://www.youtube.com/playlist?list=PLXj2KCNUw2CyPeZMVU3a6m4Kh8U-Un7vi",
+      "playlist_id": "PLXj2KCNUw2CyPeZMVU3a6m4Kh8U-Un7vi",
+      "created_at": "2025-12-11T23:54:53.351184",
+      "video_count": 20,
+      "conditions": {
+        "era": "2010s",
+        "category": "music",
+        "keywords": [
+          "pop",
+          "electronic"
+        ],
+        "additional_keyword": "",
+        "region_group": "全世界",
+        "country": "全世界",
+        "video_count": 20,
+        "privacy": "public",
+        "prefer_official": true,
+        "search_precision": "standard",
+        "platforms": [
+          "youtube"
+        ]
+      },
+      "platform": "youtube"
+    },
+    {
+      "id": "1fe48362-9aec-44d9-acfa-0db923f70201",
+      "title": "Mix lists - 2020s Music [韓国] (pop electronic)",
+      "url": "https://www.youtube.com/playlist?list=PLXj2KCNUw2CxZlg-pGUdfWTUDeqrrEjST",
+      "playlist_id": "PLXj2KCNUw2CxZlg-pGUdfWTUDeqrrEjST",
+      "created_at": "2025-12-12T00:43:37.948539",
+      "video_count": 20,
+      "conditions": {
+        "era": "2020s",
+        "category": "music",
+        "keywords": [
+          "pop",
+          "electronic"
+        ],
+        "additional_keyword": "",
+        "region_group": "アジア",
+        "country": "韓国",
+        "video_count": 20,
+        "privacy": "private",
+        "prefer_official": true,
+        "search_precision": "standard",
+        "platforms": [
+          "youtube"
+        ]
+      },
+      "platform": "youtube"
+    },
+    {
+      "id": "24d2f8ff-7c54-4bb1-a5dd-3fa664497022",
+      "title": "Mix lists - 2020s Music [韓国] (metal)",
+      "url": "https://www.youtube.com/playlist?list=PLXj2KCNUw2CxhiRy28JuVcD7UsoXHO2-E",
+      "playlist_id": "PLXj2KCNUw2CxhiRy28JuVcD7UsoXHO2-E",
+      "created_at": "2025-12-12T00:46:08.271165",
+      "video_count": 19,
+      "conditions": {
+        "era": "2020s",
+        "category": "music",
+        "keywords": [
+          "metal"
+        ],
+        "additional_keyword": "",
+        "region_group": "アジア",
+        "country": "韓国",
+        "video_count": 20,
+        "privacy": "public",
+        "prefer_official": true,
+        "search_precision": "standard",
+        "platforms": [
+          "youtube"
+        ]
+      },
+      "platform": "youtube"
+    }
+  ]
+}

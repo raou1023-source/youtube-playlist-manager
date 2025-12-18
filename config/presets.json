@@ -1,0 +1,104 @@
+{
+  "presets": [
+    {
+      "id": "preset_80s_rock_japan",
+      "name": "80s Rock (Japan)",
+      "created_at": "2024-01-01T00:00:00",
+      "settings": {
+        "era": "1980s",
+        "category": "music",
+        "keywords": ["rock"],
+        "additional_keyword": "",
+        "region_group": "アジア",
+        "country": "日本",
+        "video_count": 20,
+        "privacy": "private",
+        "prefer_official": true,
+        "search_precision": "standard",
+        "add_region_keywords": true,
+        "add_detailed_description": true,
+        "platforms": ["youtube"]
+      }
+    },
+    {
+      "id": "preset_2020s_kpop",
+      "name": "2020s K-Pop",
+      "created_at": "2024-01-01T00:00:00",
+      "settings": {
+        "era": "2020s",
+        "category": "music",
+        "keywords": ["pop"],
+        "additional_keyword": "K-POP",
+        "region_group": "アジア",
+        "country": "韓国",
+        "video_count": 25,
+        "privacy": "private",
+        "prefer_official": true,
+        "search_precision": "high",
+        "add_region_keywords": true,
+        "add_detailed_description": true,
+        "platforms": ["youtube"]
+      }
+    },
+    {
+      "id": "preset_jazz_classics",
+      "name": "Jazz Classics",
+      "created_at": "2024-01-01T00:00:00",
+      "settings": {
+        "era": "1970s",
+        "category": "music",
+        "keywords": ["jazz"],
+        "additional_keyword": "classic",
+        "region_group": "全世界",
+        "country": "全世界",
+        "video_count": 30,
+        "privacy": "private",
+        "prefer_official": true,
+        "search_precision": "standard",
+        "add_region_keywords": false,
+        "add_detailed_description": true,
+        "platforms": ["youtube"]
+      }
+    },
+    {
+      "id": "preset_90s_jpop",
+      "name": "90s J-Pop",
+      "created_at": "2024-01-01T00:00:00",
+      "settings": {
+        "era": "1990s",
+        "category": "music",
+        "keywords": ["pop"],
+        "additional_keyword": "",
+        "region_group": "アジア",
+        "country": "日本",
+        "video_count": 20,
+        "privacy": "private",
+        "prefer_official": true,
+        "search_precision": "standard",
+        "add_region_keywords": true,
+        "add_detailed_description": true,
+        "platforms": ["youtube"]
+      }
+    },
+    {
+      "id": "preset_anime_openings",
+      "name": "Anime Openings",
+      "created_at": "2024-01-01T00:00:00",
+      "settings": {
+        "era": "2010s",
+        "category": "anime",
+        "keywords": [],
+        "additional_keyword": "OP opening",
+        "region_group": "アジア",
+        "country": "日本",
+        "video_count": 25,
+        "privacy": "private",
+        "prefer_official": true,
+        "search_precision": "standard",
+        "add_region_keywords": true,
+        "add_detailed_description": true,
+        "platforms": ["youtube", "niconico"]
+      }
+    }
+  ]
+}
