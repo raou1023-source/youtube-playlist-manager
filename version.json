@@ -3,3 +3,14 @@
   "download_url": "https://github.com/YOUR_USERNAME/youtube-playlist-manager/releases/download/v1.0.0/YouTube-Playlist-Manager.exe",
   "release_notes": "初回リリース (v1.0.0)\n\n新機能:\n- 年代別検索（1960年代～2020年代）\n- カテゴリ別検索\n- キーワード別検索（音楽ジャンル、映画、教育、ニュース）\n- 地域別検索（全世界、アジア、ヨーロッパ、北米・南米、その他）\n- 公式チャンネル優先機能\n- 動画ビューワー\n- セットアップウィザード\n- オンラインアップデート機能"
 }
+
+
+保存（Ctrl+S）
+
+---
+
+### **ステップ2: GitHubにアップロード**
+
+ブラウザで以下を開く：
+```
+https://github.com/raou1023-source/youtube-playlist-manager/upload/main
