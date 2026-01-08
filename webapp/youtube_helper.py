@@ -1,6 +1,6 @@
 """
 YouTube API Helper for Streamlit
-Streamlit用YouTube API連携モジュール (Streamlit Secrets対応版)
+Streamlit用YouTube API連携モジュール (Streamlit Cloud対応版 - 手動OAuth認証)
 """
 
 import os
@@ -22,7 +22,7 @@ sys.path.insert(0, str(project_root / "src"))
 SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 
 class YouTubeAPIHelper:
-    """Streamlit用YouTube APIヘルパークラス (Streamlit Secrets対応)"""
+    """Streamlit用YouTube APIヘルパークラス (手動OAuth認証対応)"""
 
     def __init__(self):
         self.youtube = None
@@ -49,10 +49,12 @@ class YouTubeAPIHelper:
                 token_uri = "https://oauth2.googleapis.com/token"
                 auth_provider_x509_cert_url = "https://www.googleapis.com/oauth2/v1/certs"
                 client_secret = "your-client-secret"
-                redirect_uris = ["https://your-app-url.streamlit.app"]
+                redirect_uris = ["http://localhost"]
                 ```
                 
                 4. **Save changes** をクリック
+                
+                **注意**: `redirect_uris` は `["http://localhost"]` のままにしてください
                 """)
                 return None
 
@@ -65,7 +67,7 @@ class YouTubeAPIHelper:
                     "token_uri": st.secrets["google_oauth"]["token_uri"],
                     "auth_provider_x509_cert_url": st.secrets["google_oauth"]["auth_provider_x509_cert_url"],
                     "client_secret": st.secrets["google_oauth"]["client_secret"],
-                    "redirect_uris": st.secrets["google_oauth"]["redirect_uris"]
+                    "redirect_uris": ["urn:ietf:wg:oauth:2.0:oob"]  # 手動コピー用
                 }
             }
             
@@ -76,7 +78,7 @@ class YouTubeAPIHelper:
             return None
 
     def authenticate(self):
-        """YouTube API認証 (Streamlit Secrets対応)"""
+        """YouTube API認証 (手動OAuth認証フロー)"""
         creds = None
         
         # セッションステートにトークンがあれば使用
@@ -91,7 +93,10 @@ class YouTubeAPIHelper:
             if creds and creds.expired and creds.refresh_token:
                 try:
                     creds.refresh(Request())
-                except:
+                    # 更新したトークンを保存
+                    st.session_state["youtube_token"] = pickle.dumps(creds)
+                except Exception as e:
+                    st.warning(f"⚠️ トークン更新エラー: {str(e)}")
                     creds = None
 
             if not creds:
@@ -106,52 +111,89 @@ class YouTubeAPIHelper:
                         json.dump(oauth_config, f)
                         temp_credentials_path = f.name
 
-                    # OAuth フローを実行
+                    # OAuth フローを作成（手動コピー用）
                     flow = Flow.from_client_secrets_file(
                         temp_credentials_path,
                         scopes=SCOPES,
-                        redirect_uri=oauth_config["installed"]["redirect_uris"][0]
+                        redirect_uri='urn:ietf:wg:oauth:2.0:oob'
                     )
 
                     # 認証URLを生成
-                    auth_url, _ = flow.authorization_url(prompt='consent')
+                    auth_url, _ = flow.authorization_url(
+                        prompt='consent',
+                        access_type='offline',
+                        include_granted_scopes='true'
+                    )
 
-                    st.info("🔐 YouTube APIに接続するには、以下のリンクをクリックしてGoogleアカウントで認証してください:")
-                    st.markdown(f"[Google認証ページを開く]({auth_url})")
+                    # 認証手順を表示
+                    st.info("🔐 **YouTube APIに接続する手順:**")
+                    
+                    st.markdown("**ステップ1:** 下のボタンをクリックして、Google認証ページを開いてください")
+                    
+                    # 認証URLをボタンとして表示
+                    st.markdown(f"""
+                    <a href="{auth_url}" target="_blank">
+                        <button style="
+                            background-color: #4285F4;
+                            color: white;
+                            padding: 10px 20px;
+                            border: none;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            font-size: 16px;
+                            font-weight: bold;
+                        ">
+                            🔓 Google認証ページを開く
+                        </button>
+                    </a>
+                    """, unsafe_allow_html=True)
+                    
+                    st.markdown("**ステップ2:** Googleアカウントでログインし、アクセス許可を承認してください")
+                    st.markdown("**ステップ3:** 表示される**認証コード**をコピーして、下の入力欄に貼り付けてください")
                     
                     # 認証コード入力欄
                     auth_code = st.text_input(
-                        "認証後に表示されるコードを入力してください:",
+                        "📋 認証コードを貼り付けてください:",
                         type="password",
-                        key="auth_code_input"
+                        key="auth_code_input",
+                        help="認証ページに表示されるコードをコピー&ペーストしてください"
                     )
 
-                    if auth_code:
+                    if auth_code and st.button("✅ 認証する", key="auth_button"):
                         try:
-                            flow.fetch_token(code=auth_code)
+                            # 認証コードでトークンを取得
+                            flow.fetch_token(code=auth_code.strip())
                             creds = flow.credentials
                             
                             # セッションステートに保存
                             st.session_state["youtube_token"] = pickle.dumps(creds)
-                            st.success("✅ 認証に成功しました！")
+                            st.success("✅ 認証に成功しました！ページを再読み込みしています...")
+                            
+                            # 一時ファイルを削除
+                            try:
+                                os.unlink(temp_credentials_path)
+                            except:
+                                pass
+                            
+                            # ページをリロード
                             st.rerun()
                             
                         except Exception as e:
                             st.error(f"❌ 認証エラー: {str(e)}")
+                            st.info("💡 認証コードが正しいか確認してください。認証コードは1回のみ使用できます。")
                             return False
                     else:
                         return False
 
                     # 一時ファイルを削除
-                    os.unlink(temp_credentials_path)
+                    try:
+                        os.unlink(temp_credentials_path)
+                    except:
+                        pass
 
                 except Exception as e:
                     st.error(f"❌ 認証エラー: {str(e)}")
                     return False
-
-            # トークンをセッションステートに保存
-            if creds:
-                st.session_state["youtube_token"] = pickle.dumps(creds)
 
         self.credentials = creds
         self.youtube = build('youtube', 'v3', credentials=creds)
